@@ -1,4 +1,4 @@
-# adabi-ml-project
+# adabi-cupids-algorithm-compatibility
 ## 1. Il Problema
 La domanda centrale del progetto è: **Può il machine learning prevedere la compatibilità tra due persone?**
 Il dataset simula profili di app di incontri per classificare le coppie come "compatibili" o "non compatibili" basandosi su 26 variabili di input (13 per ogni individuo).
