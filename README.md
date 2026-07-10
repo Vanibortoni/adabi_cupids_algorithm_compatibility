@@ -6,6 +6,7 @@ Il dataset simula profili di app di incontri per classificare le coppie come "co
 ## 2. Il Dataset
 - **Fonte:** [Cupid's Algorithm su Kaggle](https://www.kaggle.com/datasets/likithagedipudi/cupids-algorithm).
 - **Dimensioni:** 100.000 righe e 30 colonne.
+- ![Data Exploration](images/istograma.png)
 - **Bilanciamento:** 43% compatibili / 57% non compatibili.
 - **Variabili chiave:** Tratti Big Five (apertura, estroversione, ecc.), cronotipo, linguaggio dell'amore e ambizione professionale.
 
