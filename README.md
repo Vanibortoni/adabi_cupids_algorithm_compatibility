@@ -1,4 +1,13 @@
 # adabi-cupids-algorithm-compatibility
+La idea sarebbe fare i seguenti modelli:
+Classificazione: compatible → Random Forest Classifier
+Regressione: compatibility_score → Decision Tree Regressor
+Regressione: compatibility_score → MLPRegressor
+
+Se abbiamo tempo sarebbe ideale fare anche la comparazione della classificazione utilizzando MLPClassifier e fare la regressione anche per la variabile relationship_longevity_months.
+
+
+# Classificazione "COMPATIBLE"
 ## 1. Il Problema
 La domanda centrale del progetto è: **Può il machine learning prevedere la compatibilità tra due persone?**
 Il dataset simula profili di app di incontri per classificare le coppie come "compatibili" o "non compatibili" basandosi su 26 variabili di input (13 per ogni individuo).
