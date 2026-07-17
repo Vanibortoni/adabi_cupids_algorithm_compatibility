@@ -48,7 +48,7 @@ Contiene 30 colonne per ogni coppia, tra cui:
 ## 📁 Struttura del repository
 
 ```
-├── Cupids_Algorithm_ML_corretto.ipynb   # Notebook completo con codice e spiegazioni
+├── Progetto_ML_Classificazione.ipynb   # Notebook completo con codice e spiegazioni
 ├── README.md                            # Questo file
 └── Images/                              # Screenshot dei grafici generati dal notebook
     ├── 01_istogrammi_variabili.png
