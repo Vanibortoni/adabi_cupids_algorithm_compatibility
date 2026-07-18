@@ -53,22 +53,23 @@ Contiene 30 colonne per ogni coppia, tra cui:
 
 ## 📁 Struttura del repository
 
-```
-├── Progetto_ML_Classificazione.ipynb   # Notebook completo con codice e spiegazioni
-├── README.md                            # Questo file
-└── Images/                              # Screenshot dei grafici generati dal notebook
-    ├── 01_istogrammi_variabili.png
-    ├── 02_matrice_correlazione.png
-    ├── 03_matrice_confusione_finale.png
-    ├── 04_curva_precision_recall.png
-    ├── 05_confronto_rf_vs_mlp_training.png
-    └── 06_confronto_finale_rf_vs_mlp.png
-```
 
-Per far comparire le immagini in questo README, basta salvare gli screenshot dei
-grafici prodotti dal notebook nella cartella `Images/`, usando esattamente questi nomi
-(oppure aggiornando i percorsi qui sotto se preferisci nomi diversi).
-
+├── Progetto_ML_Classificazione.ipynb    # Notebook 1: classificazione binaria (compatible)
+├── Progetto_ML_Regressione.ipynb        # Notebook 2: regressione (compatibility_score)
+├── README.md                             # Questo file
+└── Images/
+├── classificazione/
+│   ├── 01_istogrammi_variabili.png
+│   ├── 02_matrice_correlazione.png
+│   ├── 03_matrice_confusione_finale.png
+│   ├── 04_curva_precision_recall.png
+│   └── 05_ablation_study_feature_coppia.png
+└── regressione/
+├── 01_istogrammi_variabili.png
+├── 02_correlazione_pearson_spearman.png
+├── 03_loss_curve_mlp.png
+├── 04_decision_tree_struttura.png
+└── 05_confronto_finale_mlp_vs_tree.png
 ---
 
 ## ⚙️ Requisiti
