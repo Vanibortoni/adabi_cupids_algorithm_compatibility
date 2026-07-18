@@ -9,9 +9,9 @@ personalità di coppia:
 - **Regressione**:prevedere il **punteggio numerico di compatibilità**
   (`compatibility_score`).
 
-Per ciascun problema vengono confrontati due modelli — una **Rete Neurale (MLP)** e
+Per ciascun problema vengono confrontati due modelli: una **Rete Neurale (MLP)** e
 un modello ad albero (**Random Forest** per la classificazione, **Decision Tree** per
-la regressione) — seguendo lo stesso flusso di lavoro: esplorazione dei dati, feature
+la regressione). Seguendo lo stesso flusso di lavoro: esplorazione dei dati, feature
 engineering, preprocessing, addestramento, ottimizzazione degli iperparametri e
 valutazione finale su un Test Set mai visto dai modelli.
 
