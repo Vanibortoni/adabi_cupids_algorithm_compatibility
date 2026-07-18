@@ -100,27 +100,33 @@ pip install pandas numpy scikit-learn seaborn matplotlib kagglehub
 
 ---
 
-## 🔍 Metodologia
+## 🎯 Progetto 1 — Classificazione: coppia compatibile o no?
 
-Il notebook è organizzato nei seguenti passaggi:
+### Metodologia
 
-1. **Importazione dei dati** — download automatico del dataset da Kaggle.
+1. **Importazione dei dati** — download automatico da Kaggle.
 2. **Osservazione del dataset** — prima occhiata alla struttura dei dati.
-3. **Training/Test split e Feature Engineering** — separazione dell'80/20% e
-   creazione di due nuove variabili (`age_diff`, `ambition_diff`).
-4. **Data Exploration** — controllo dei valori mancanti, distribuzioni e matrice di
-   correlazione.
-5. **Preprocessing** — standardizzazione delle variabili numeriche e codifica delle
-   variabili categoriche (One-Hot Encoding).
-6. **Addestramento** — modello iniziale Random Forest.
-7. **Validazione** — valutazione tramite Cross Validation e F1-Score.
-8. **Analisi degli errori** — matrice di confusione, precisione e recall.
-9. **Ottimizzazione degli iperparametri** — ricerca con `GridSearchCV`.
-10. **Valutazione finale** — test del modello ottimizzato su dati mai visti.
-11. **Curve Precision/Recall** — analisi del compromesso tra precisione e recall al
-    variare della soglia di decisione.
-12. **Confronto con una Rete Neurale (MLP)** — valutazione comparativa finale tra
-    Random Forest e MLP sul Test Set.
+3. **Training/Test split e Feature Engineering** — separazione 80/20 eseguita
+   prima di ogni analisi approfondita, per evitare data leakage; creazione di
+   variabili di coppia (`age_diff`, `ambition_diff`).
+4. **Data Exploration** — controllo dei valori mancanti, distribuzioni e matrice
+   di correlazione, calcolata solo sul Training Set.
+5. **Verifica sperimentale delle feature (ablation study)** — confronto tra sole
+   variabili originali, sole variabili di coppia, ed entrambe insieme.
+6. **Preprocessing** — standardizzazione delle variabili numeriche e codifica
+   delle variabili categoriche (One-Hot Encoding).
+7. **Addestramento** — modello iniziale Random Forest.
+8. **Validazione** — Cross Validation e F1-Score.
+9. **Analisi degli errori** — matrice di confusione, precisione e recall.
+10. **Ottimizzazione degli iperparametri** — `GridSearchCV` su un campione ridotto
+    del Training Set per velocità; il modello finale viene poi riallenato
+    sull'intero Training Set con la configurazione migliore trovata.
+11. **Curve Precision/Recall e soglia di decisione** — soglia scelta nel punto
+    di incrocio tra precisione e recall, calcolato tramite cross-validation.
+12. **Confronto con una Rete Neurale (MLP)** — ottimizzata anch'essa con
+    `GridSearchCV`, con la stessa procedura di soglia.
+13. **Valutazione finale comparativa** — Accuracy, F1-Score e ROC-AUC su Test Set.
+
 
 ---
 
