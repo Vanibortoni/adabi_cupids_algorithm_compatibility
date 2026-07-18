@@ -60,7 +60,7 @@ etichettato come "A" e chi come "B").
 ├── Progetto_ML_Classificazione.ipynb    # Parte 1: classificazione binaria (compatible)
 ├── Progetto_ML_Regressione.ipynb        # Parte 2: regressione (compatibility_score)
 ├── README.md                            # Questo file
-└── Images/                              # Screenshot dei grafici generati dai notebook
+└── Images/                              # Grafici generati dai notebook
     ├── classificazione_01_istogrammi.png
     ├── classificazione_02_matrice_correlazione.png
     ├── classificazione_03_matrice_confusione_finale.png
@@ -75,10 +75,6 @@ etichettato come "A" e chi come "B").
     ├── regressione_06_scatter_decision_tree.png
     └── regressione_07_confronto_finale_metriche.png
 ```
-
-Per far comparire le immagini in questo README, salva gli screenshot dei grafici
-generati dai notebook nella cartella `Images/`, usando esattamente questi nomi
-(oppure aggiorna i percorsi qui sotto se preferisci nomi diversi).
 
 ---
 
