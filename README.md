@@ -1,13 +1,19 @@
 # Cupid's Algorithm 💘 — Previsione della Compatibilità di Coppia con Machine Learning
 
-Progetto di Machine Learning che affronta un problema di **classificazione binaria**:
-prevedere se due persone (Persona A e Persona B) sono **compatibili** o meno, a
-partire dai loro dati anagrafici e dai loro tratti di personalità.
+Progetto di Machine Learning basato sul dataset **Cupid's Algorithm**, che affronta
+**due problemi complementari** a partire dagli stessi dati anagrafici e tratti di
+personalità di coppia:
 
-Il progetto confronta due modelli — **Random Forest** e una **Rete Neurale (MLP)** —
-seguendo un flusso di lavoro completo: esplorazione dei dati, preprocessing,
-addestramento, ottimizzazione degli iperparametri e valutazione finale su un Test Set
-mai visto dal modello.
+- **Classificazione binaria**: prevedere se due persone sono **compatibili o meno**
+  (`compatible`, 0/1).
+- **Regressione**:prevedere il **punteggio numerico di compatibilità**
+  (`compatibility_score`).
+
+Per ciascun problema vengono confrontati due modelli — una **Rete Neurale (MLP)** e
+un modello ad albero (**Random Forest** per la classificazione, **Decision Tree** per
+la regressione) — seguendo lo stesso flusso di lavoro: esplorazione dei dati, feature
+engineering, preprocessing, addestramento, ottimizzazione degli iperparametri e
+valutazione finale su un Test Set mai visto dai modelli.
 
 ---
 
