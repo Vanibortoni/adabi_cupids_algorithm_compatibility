@@ -183,6 +183,39 @@ La rete neurale (MLP) risulta il modello più efficace, riuscendo a individuare 
 coppie realmente compatibili mantenendo comunque una precisione più alta rispetto al
 Random Forest.
 
+## 📈 Progetto 2 — Regressione: punteggio di compatibilità
+
+### Metodologia
+
+1. **Importazione dei dati** — download automatico da Kaggle.
+2. **Osservazione del dataset** — quick look (head/info/describe/istogrammi).
+3. **Train/test split** — eseguito subito dopo il quick look, prima di ogni
+   analisi che metta in relazione le feature con il target.
+4. **Data Exploration e creazione di nuove variabili** — feature di coppia
+   (differenze tra tratti: `age_diff`, `openness_diff`, ecc.; variabili di
+   somiglianza: `same_love_language`, `same_location`, `same_career`), con
+   analisi di correlazione (Pearson e Spearman) calcolata solo sul Training Set.
+5. **Data preprocessing e Pipeline** — standardizzazione delle variabili
+   numeriche e codifica delle variabili categoriche.
+6. **Definizione e Addestramento del modello** — Rete Neurale (`MLPRegressor`).
+7. **Learning curve e validazione interna** — analisi della loss e dello score
+   di validazione durante il training.
+8. **Valutazione sul Test Set** — RMSE.
+9. **Confronto con un Decision Tree Regressor** — ottimizzazione degli
+   iperparametri con `GridSearchCV` (profondità, numero di foglie).
+10. **Visualizzazione della struttura dell'albero** — analisi delle feature più
+    rilevanti per le prime divisioni.
+11. **Valutazione finale comparativa** — RMSE, MAE e R² tra i due modelli.
+
+### Risultati
+
+### Confronto finale
+
+| Modello | RMSE | MAE | R² |
+|---|---|---|---|
+| Decision Tree | _da aggiornare_ | _da aggiornare_ | _da aggiornare_ |
+| **Rete Neurale (MLP)** | _da aggiornare_ | _da aggiornare_ | _da aggiornare_ |
+
 ---
 
 ## ⚠️ Limiti e possibili miglioramenti
