@@ -1,19 +1,16 @@
-# Cupid's Algorithm 💘 — Previsione della Compatibilità di Coppia con Machine Learning
+# Cupid's Algorithm 💘 — Machine Learning sulla Compatibilità di Coppia
 
-Progetto di Machine Learning basato sul dataset **Cupid's Algorithm**, che affronta
-**due problemi complementari** a partire dagli stessi dati anagrafici e tratti di
-personalità di coppia:
+Progetto di Machine Learning sul dataset **[Cupid's Algorithm](https://www.kaggle.com/datasets/likithagedipudi/cupids-algorithm)**,
+che affronta lo stesso problema da due angolazioni diverse:
 
-- **Classificazione binaria**: prevedere se due persone sono **compatibili o meno**
-  (`compatible`, 0/1).
-- **Regressione**:prevedere il **punteggio numerico di compatibilità**
+- **Classificazione binaria** → prevedere se una coppia è **compatibile** o no
+  (`compatible`).
+- **Regressione** → prevedere il **punteggio esatto di compatibilità**
   (`compatibility_score`).
 
-Per ciascun problema vengono confrontati due modelli: una **Rete Neurale (MLP)** e
-un modello ad albero (**Random Forest** per la classificazione, **Decision Tree** per
-la regressione). Seguendo lo stesso flusso di lavoro: esplorazione dei dati, feature
-engineering, preprocessing, addestramento, ottimizzazione degli iperparametri e
-valutazione finale su un Test Set mai visto dai modelli.
+In entrambe le parti confrontiamo un modello ad alberi (Random Forest / Decision
+Tree) con una **Rete Neurale (MLP)**, e costruiamo variabili di **differenza e
+somiglianza** tra i due partner al posto dei loro valori individuali grezzi.
 
 ---
 
@@ -22,55 +19,67 @@ valutazione finale su un Test Set mai visto dai modelli.
 - [Dataset](#-dataset)
 - [Struttura del repository](#-struttura-del-repository)
 - [Requisiti](#-requisiti)
-- [Come eseguire il notebook](#-come-eseguire-il-notebook)
-- [Metodologia](#-metodologia)
-- [Risultati](#-risultati)
-- [Confronto finale tra i modelli](#-confronto-finale-tra-i-modelli)
+- [Come eseguire i notebook](#-come-eseguire-i-notebook)
+- [Parte 1 — Classificazione](#-parte-1--classificazione)
+- [Parte 2 — Regressione](#-parte-2--regressione)
+- [Conclusioni generali](#-conclusioni-generali)
 - [Limiti e possibili miglioramenti](#-limiti-e-possibili-miglioramenti)
-- [Autore](#-autore)
 - [Licenza](#-licenza)
 
 ---
 
 ## 📊 Dataset
 
-Il dataset utilizzato è **[Cupid's Algorithm](https://www.kaggle.com/datasets/likithagedipudi/cupids-algorithm)**,
-disponibile su Kaggle e scaricato automaticamente tramite `kagglehub`.
+Il dataset contiene 100.000 coppie, con 30 colonne per ciascuna: dati demografici
+(età, istruzione, luogo di residenza, settore professionale) e tratti psicologici
+(i Big Five: apertura, coscienziosità, estroversione, gradevolezza; più cronotipo,
+spontaneità, espressività emotiva e linguaggio dell'amore) sia per la Persona A sia
+per la Persona B, più le variabili target: `compatible`, `compatibility_score`,
+`relationship_longevity_months`.
 
-Contiene 30 colonne per ogni coppia, tra cui:
+> Il dataset contiene rumore aggiunto intenzionalmente dall'autore originale, per
+> simulare l'imprevedibilità reale delle relazioni umane.
 
-- **Dati demografici**: età, livello di istruzione, luogo di residenza, settore
-  professionale;
-- **Tratti psicologici**: apertura mentale, estroversione, gradevolezza,
-  coscienziosità, cronotipo, spontaneità, espressività emotiva, linguaggio dell'amore;
-- **Variabili target**: `compatible` (0/1), `compatibility_score`,
-  `relationship_longevity_months`.
+Invece di usare i valori grezzi di A e B, in entrambi i notebook costruiamo:
+- **Variabili di differenza** (`age_diff`, `openness_diff`, ecc.) per ogni tratto
+  numerico;
+- **Variabili binarie di somiglianza** (`same_location`, `same_career_field`,
+  `same_love_language`) per le variabili categoriche.
 
-> Nota: il dataset contiene rumore aggiunto intenzionalmente dall'autore originale,
-> per simulare l'imprevedibilità reale delle relazioni umane.
+Questo perché la compatibilità dipende dalla **relazione** tra i due partner, non
+dal valore assoluto di uno solo — e verificando sperimentalmente, questa scelta
+migliora le prestazioni dei modelli ed evita un problema di asimmetria (il modello
+potrebbe altrimenti trattare diversamente una coppia a seconda di chi viene
+etichettato come "A" e chi come "B").
 
 ---
 
 ## 📁 Struttura del repository
 
 ```
-├── Progetto_ML_Classificazione.ipynb    # Notebook 1: classificazione binaria (compatible)
-├── Progetto_ML_Regressione.ipynb        # Notebook 2: regressione (compatibility_score)
-├── README.md                             # Questo file
-└── Images/
-├── classificazione/
-│   ├── 01_istogrammi_variabili.png
-│   ├── 02_matrice_correlazione.png
-│   ├── 03_matrice_confusione_finale.png
-│   ├── 04_curva_precision_recall.png
-│   └── 05_ablation_study_feature_coppia.png
-└── regressione/
-├── 01_istogrammi_variabili.png
-├── 02_correlazione_pearson_spearman.png
-├── 03_loss_curve_mlp.png
-├── 04_decision_tree_struttura.png
-└── 05_confronto_finale_mlp_vs_tree.png
+├── Progetto_ML_Classificazione.ipynb    # Parte 1: classificazione binaria (compatible)
+├── Progetto_ML_Regressione.ipynb        # Parte 2: regressione (compatibility_score)
+├── README.md                            # Questo file
+└── Images/                              # Screenshot dei grafici generati dai notebook
+    ├── classificazione_01_istogrammi.png
+    ├── classificazione_02_matrice_correlazione.png
+    ├── classificazione_03_matrice_confusione_finale.png
+    ├── classificazione_04_curva_precision_recall.png
+    ├── classificazione_05_confronto_rf_vs_mlp_training.png
+    ├── classificazione_06_confronto_finale_rf_vs_mlp.png
+    ├── regressione_01_istogrammi.png
+    ├── regressione_02_loss_curve.png
+    ├── regressione_03_validation_curve.png
+    ├── regressione_04_scatter_mlp.png
+    ├── regressione_05_struttura_decision_tree.png
+    ├── regressione_06_scatter_decision_tree.png
+    └── regressione_07_confronto_finale_metriche.png
 ```
+
+Per far comparire le immagini in questo README, salva gli screenshot dei grafici
+generati dai notebook nella cartella `Images/`, usando esattamente questi nomi
+(oppure aggiorna i percorsi qui sotto se preferisci nomi diversi).
+
 ---
 
 ## ⚙️ Requisiti
@@ -80,12 +89,12 @@ Contiene 30 colonne per ogni coppia, tra cui:
 - Le seguenti librerie:
 
 ```bash
-pip install pandas numpy scikit-learn seaborn matplotlib kagglehub
+pip install pandas numpy scikit-learn seaborn matplotlib scipy kagglehub
 ```
 
 ---
 
-## ▶️ Come eseguire il notebook
+## ▶️ Come eseguire i notebook
 
 1. Clona questo repository:
    ```bash
@@ -93,161 +102,135 @@ pip install pandas numpy scikit-learn seaborn matplotlib kagglehub
    cd <tuo-repo>
    ```
 2. Installa le dipendenze (vedi sopra).
-3. Apri il notebook `Cupids_Algorithm_ML_corretto.ipynb` con Jupyter o caricalo su
-   Google Colab.
-4. Esegui le celle in ordine dall'alto verso il basso: la prima cella scarica
-   automaticamente il dataset da Kaggle tramite `kagglehub`.
+3. Apri i notebook con Jupyter o caricali su Google Colab.
+4. Esegui le celle in ordine dall'alto verso il basso: la prima cella di ciascun
+   notebook scarica automaticamente il dataset da Kaggle tramite `kagglehub`.
+
+I due notebook sono indipendenti tra loro (ognuno scarica e prepara i propri dati),
+quindi possono essere eseguiti in qualsiasi ordine.
 
 ---
 
-## 🎯 Progetto 1 — Classificazione: coppia compatibile o no?
+## 🔷 Parte 1 — Classificazione
 
-### Metodologia
+**Obiettivo:** prevedere se una coppia è compatibile (`compatible`, 0/1).
 
-1. **Importazione dei dati** — download automatico da Kaggle.
-2. **Osservazione del dataset** — prima occhiata alla struttura dei dati.
-3. **Training/Test split e Feature Engineering** — separazione 80/20 eseguita
-   prima di ogni analisi approfondita, per evitare data leakage; creazione di
-   variabili di coppia (`age_diff`, `ambition_diff`).
-4. **Data Exploration** — controllo dei valori mancanti, distribuzioni e matrice
-   di correlazione, calcolata solo sul Training Set.
-5. **Verifica sperimentale delle feature (ablation study)** — confronto tra sole
-   variabili originali, sole variabili di coppia, ed entrambe insieme.
-6. **Preprocessing** — standardizzazione delle variabili numeriche e codifica
-   delle variabili categoriche (One-Hot Encoding).
-7. **Addestramento** — modello iniziale Random Forest.
-8. **Validazione** — Cross Validation e F1-Score.
-9. **Analisi degli errori** — matrice di confusione, precisione e recall.
-10. **Ottimizzazione degli iperparametri** — `GridSearchCV` su un campione ridotto
-    del Training Set per velocità; il modello finale viene poi riallenato
-    sull'intero Training Set con la configurazione migliore trovata.
-11. **Curve Precision/Recall e soglia di decisione** — soglia scelta nel punto
-    di incrocio tra precisione e recall, calcolato tramite cross-validation.
-12. **Confronto con una Rete Neurale (MLP)** — ottimizzata anch'essa con
-    `GridSearchCV`, con la stessa procedura di soglia.
-13. **Valutazione finale comparativa** — Accuracy, F1-Score e ROC-AUC su Test Set.
-
-
----
-
-## 📈 Risultati
+**Modelli confrontati:** Random Forest Classifier (ottimizzato con `GridSearchCV`) e
+MLP Classifier (ottimizzato con `GridSearchCV`).
 
 ### Distribuzione delle variabili
 
-![Istogrammi delle variabili](Images/01_istogrammi_variabili.png)
+![Istogrammi delle variabili](Images/classificazione_01_istogrammi.png)
 
-Le variabili numeriche (età, tratti di personalità) mostrano distribuzioni
-abbastanza uniformi o a campana, senza valori mancanti o anomalie evidenti.
+### Matrice di correlazione (variabili di differenza vs target)
 
-### Matrice di correlazione
+![Matrice di correlazione](Images/classificazione_02_matrice_correlazione.png)
 
-![Matrice di correlazione](Images/02_matrice_correlazione.png)
+Abbiamo verificato che usare **solo** le variabili di differenza/somiglianza dà
+risultati migliori (F1-Score 0.64 in Cross Validation) rispetto a includere anche i
+valori grezzi di A e B (F1-Score 0.62).
 
-Le correlazioni tra le variabili sono generalmente basse, il che esclude
-correlazioni spurie e conferma che i dati seguono una logica psicologica
-plausibile.
+### Matrice di confusione del Random Forest ottimizzato
 
-### Matrice di confusione del modello ottimizzato (Random Forest)
-
-![Matrice di confusione finale](Images/03_matrice_confusione_finale.png)
-
-Dopo l'ottimizzazione degli iperparametri, il Random Forest raggiunge un
-**F1-Score di 0.56** sul Test Set.
+![Matrice di confusione finale](Images/classificazione_03_matrice_confusione_finale.png)
 
 ### Curva Precision/Recall
 
-![Curva Precision-Recall](Images/04_curva_precision_recall.png)
-
-Il grafico mostra chiaramente il compromesso tra precisione e recall al variare
-della soglia di decisione: aumentando la soglia il modello diventa più preciso ma
-individua meno coppie realmente compatibili.
+![Curva Precision-Recall](Images/classificazione_04_curva_precision_recall.png)
 
 ### Confronto Random Forest vs MLP in fase di addestramento
 
-![Confronto RF vs MLP in training](Images/05_confronto_rf_vs_mlp_training.png)
+![Confronto RF vs MLP in training](Images/classificazione_05_confronto_rf_vs_mlp_training.png)
 
----
+### Risultato finale sul Test Set
 
-## 🏆 Confronto finale tra i modelli
-
-Valutazione sul Test Set (dati mai visti durante l'addestramento):
-
-![Confronto finale RF vs MLP](Images/06_confronto_finale_rf_vs_mlp.png)
+![Confronto finale RF vs MLP](Images/classificazione_06_confronto_finale_rf_vs_mlp.png)
 
 | Modello | Precisione | Recall | F1-Score |
 |---|---|---|---|
-| Random Forest (soglia 0.55) | 0.60 | 0.40 | 0.48 |
-| **MLP / Rete Neurale (soglia 0.54)** | **0.68** | **0.56** | **0.62** |
+| **Random Forest (ottimizzato)** | 0.6721 | 0.6929 | **0.6823** |
+| MLP (ottimizzato) | 0.6411 | 0.7192 | 0.6779 |
 
-La rete neurale (MLP) risulta il modello più efficace, riuscendo a individuare più
-coppie realmente compatibili mantenendo comunque una precisione più alta rispetto al
-Random Forest.
+I due modelli, entrambi ottimizzati con `GridSearchCV` e riaddestrati sull'intero
+Training Set, ottengono un F1-Score quasi identico, con un lievissimo vantaggio per
+il Random Forest.
 
-## 📈 Progetto 2 — Regressione: punteggio di compatibilità
+---
 
-### Metodologia
+## 🔷 Parte 2 — Regressione
 
-1. **Importazione dei dati** — download automatico da Kaggle.
-2. **Osservazione del dataset** — quick look (head/info/describe/istogrammi).
-3. **Train/test split** — eseguito subito dopo il quick look, prima di ogni
-   analisi che metta in relazione le feature con il target.
-4. **Data Exploration e creazione di nuove variabili** — feature di coppia
-   (differenze tra tratti: `age_diff`, `openness_diff`, ecc.; variabili di
-   somiglianza: `same_love_language`, `same_location`, `same_career`), con
-   analisi di correlazione (Pearson e Spearman) calcolata solo sul Training Set.
-5. **Data preprocessing e Pipeline** — standardizzazione delle variabili
-   numeriche e codifica delle variabili categoriche.
-6. **Definizione e Addestramento del modello** — Rete Neurale (`MLPRegressor`).
-7. **Learning curve e validazione interna** — analisi della loss e dello score
-   di validazione durante il training.
-8. **Valutazione sul Test Set** — RMSE.
-9. **Confronto con un Decision Tree Regressor** — ottimizzazione degli
-   iperparametri con `GridSearchCV` (profondità, numero di foglie).
-10. **Visualizzazione della struttura dell'albero** — analisi delle feature più
-    rilevanti per le prime divisioni.
-11. **Valutazione finale comparativa** — RMSE, MAE e R² tra i due modelli.
+**Obiettivo:** prevedere il punteggio esatto di compatibilità
+(`compatibility_score`, un numero da 0 a 100).
 
-### Risultati
-![Correlazione Pearson/Spearman](Images/02_correlazione_pearson_spearman.png)
+**Modelli confrontati:** MLP Regressor e Decision Tree Regressor (ottimizzato con
+`GridSearchCV`).
 
-L'unica variabile con correlazione positiva con il target è condividere lo stesso
-linguaggio dell'amore; la maggior parte delle altre feature mostra una relazione
-negativa (maggiore differenza tra i partner → minore compatibilità).
+### Distribuzione delle variabili
 
-![Loss curve MLP](Images/03_loss_curve_mlp.png)
+![Istogrammi delle variabili](Images/regressione_01_istogrammi.png)
 
-![Struttura Decision Tree](Images/04_decision_tree_struttura.png)
+### Addestramento della Rete Neurale (MLP)
 
-### Confronto finale
+![Loss curve](Images/regressione_02_loss_curve.png)
 
-| Modello | RMSE | MAE | R² |
-|---|---|---|---|
-| Decision Tree | 8.957 | 7.130 | 0.295 |
-| **Rete Neurale (MLP)** | 8.149 | 6.497 | 0.417 |
+![Validation curve](Images/regressione_03_validation_curve.png)
+
+### Previsioni della Rete Neurale sul Test Set
+
+![Scatter MLP](Images/regressione_04_scatter_mlp.png)
+
+### Struttura del Decision Tree ottimizzato
+
+![Struttura del Decision Tree](Images/regressione_05_struttura_decision_tree.png)
+
+### Previsioni del Decision Tree sul Test Set
+
+![Scatter Decision Tree](Images/regressione_06_scatter_decision_tree.png)
+
+### Confronto finale delle metriche
+
+![Confronto finale metriche](Images/regressione_07_confronto_finale_metriche.png)
+
+| Metrica | MLP | Decision Tree |
+|---|---|---|
+| **RMSE** | **8.149** | 8.957 |
+| **MAE** | **6.497** | 7.130 |
+| **R²** | **0.417** | 0.295 |
+
+L'MLP batte il Decision Tree su tutte e tre le metriche: spiega circa il 42% della
+variabilità del punteggio di compatibilità, un risultato modesto ma ragionevole dato
+il rumore intenzionale del dataset.
+
+---
+
+## 🏁 Conclusioni generali
+
+Il cambiamento più importante di questo progetto non è stato scegliere tra modelli
+ad albero e reti neurali, ma **come rappresentare i dati**: passare dai valori
+grezzi di Persona A e Persona B alle loro differenze e somiglianze ha migliorato le
+prestazioni in entrambi i problemi (classificazione e regressione), ed evita che il
+modello tratti diversamente una coppia a seconda dell'ordine in cui A e B compaiono
+nel dataset.
+
+Nella classificazione, Random Forest e MLP — una volta entrambi ottimizzati e
+addestrati sull'intero Training Set — ottengono risultati praticamente identici.
+Nella regressione, l'MLP si dimostra chiaramente superiore al Decision Tree. In
+entrambi i casi, nessun modello raggiunge un punteggio molto alto: un risultato
+coerente con il rumore intenzionale aggiunto al dataset per simulare
+l'imprevedibilità reale delle relazioni umane.
 
 ---
 
 ## ⚠️ Limiti e possibili miglioramenti
 
-- L'MLP non è stato ottimizzato con una ricerca sistematica degli iperparametri
-  (a differenza del Random Forest, ottimizzato con `GridSearchCV`).
-- Le soglie di decisione finali (0.55 e 0.54) sono state scelte osservando i grafici,
-  non con una procedura sistematica identica per entrambi i modelli.
+- Nella regressione non abbiamo ancora verificato se la versione "solo differenze"
+  (senza i valori grezzi di A e B) migliora i risultati, come invece confermato
+  nella classificazione.
+- L'MLP di regressione non è stato ottimizzato con una ricerca sistematica degli
+  iperparametri (a differenza del Decision Tree, ottimizzato con `GridSearchCV`).
 - Si potrebbero esplorare altri algoritmi (es. Gradient Boosting) o tecniche di
-  bilanciamento delle classi più sofisticate per migliorare ulteriormente il recall
-  senza sacrificare la precisione.
-- In entrambi i progetti, la ricerca degli iperparametri è stata eseguita (dove
-  presente il campionamento) su un sottoinsieme del Training Set per contenere i
-  tempi di calcolo; il modello finale viene sempre riallenato sull'intero
-  Training Set con la configurazione migliore trovata.
-- Il dataset contiene rumore aggiunto intenzionalmente, quindi i punteggi ottenuti
-  vanno interpretati come un limite intrinseco dei dati più che del modello.
-
----
-
-## 👤 Autore
-
-Rivera, Lina, Bortoni, Vanina
+  bilanciamento delle classi più sofisticate per migliorare ulteriormente i
+  risultati.
 
 ---
 
@@ -255,4 +238,5 @@ Rivera, Lina, Bortoni, Vanina
 
 Questo progetto è distribuito con licenza [MIT](https://opensource.org/licenses/MIT).
 Il dataset utilizzato appartiene ai rispettivi autori su Kaggle.
+
 
