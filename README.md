@@ -236,6 +236,10 @@ negativa (maggiore differenza tra i partner → minore compatibilità).
 - Si potrebbero esplorare altri algoritmi (es. Gradient Boosting) o tecniche di
   bilanciamento delle classi più sofisticate per migliorare ulteriormente il recall
   senza sacrificare la precisione.
+- In entrambi i progetti, la ricerca degli iperparametri è stata eseguita (dove
+  presente il campionamento) su un sottoinsieme del Training Set per contenere i
+  tempi di calcolo; il modello finale viene sempre riallenato sull'intero
+  Training Set con la configurazione migliore trovata.
 - Il dataset contiene rumore aggiunto intenzionalmente, quindi i punteggi ottenuti
   vanno interpretati come un limite intrinseco dei dati più che del modello.
 
