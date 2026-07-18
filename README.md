@@ -208,13 +208,22 @@ Random Forest.
 11. **Valutazione finale comparativa** — RMSE, MAE e R² tra i due modelli.
 
 ### Risultati
+![Correlazione Pearson/Spearman](Images/regressione/02_correlazione_pearson_spearman.png)
+
+L'unica variabile con correlazione positiva con il target è condividere lo stesso
+linguaggio dell'amore; la maggior parte delle altre feature mostra una relazione
+negativa (maggiore differenza tra i partner → minore compatibilità).
+
+![Loss curve MLP](Images/regressione/03_loss_curve_mlp.png)
+
+![Struttura Decision Tree](Images/regressione/04_decision_tree_struttura.png)
 
 ### Confronto finale
 
 | Modello | RMSE | MAE | R² |
 |---|---|---|---|
-| Decision Tree | _da aggiornare_ | _da aggiornare_ | _da aggiornare_ |
-| **Rete Neurale (MLP)** | _da aggiornare_ | _da aggiornare_ | _da aggiornare_ |
+| Decision Tree | 8.957 | 7.130 | 0.295 |
+| **Rete Neurale (MLP)** | 8.149 | 6.497 | 0.417 |
 
 ---
 
