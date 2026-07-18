@@ -53,7 +53,7 @@ Contiene 30 colonne per ogni coppia, tra cui:
 
 ## 📁 Struttura del repository
 
-
+```
 ├── Progetto_ML_Classificazione.ipynb    # Notebook 1: classificazione binaria (compatible)
 ├── Progetto_ML_Regressione.ipynb        # Notebook 2: regressione (compatibility_score)
 ├── README.md                             # Questo file
@@ -70,6 +70,7 @@ Contiene 30 colonne per ogni coppia, tra cui:
 ├── 03_loss_curve_mlp.png
 ├── 04_decision_tree_struttura.png
 └── 05_confronto_finale_mlp_vs_tree.png
+```
 ---
 
 ## ⚙️ Requisiti
